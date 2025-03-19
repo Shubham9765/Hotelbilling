@@ -1,26 +1,29 @@
-const CACHE_NAME = "restaurant-billing-cache-v1";
-const urlsToCache = [
-    "/",
-    "/index.html",
-    "/dashboard.html",
-    "/menu.html",
-    "/waiters.html",
-    "/tables.html",
-    "/app.js",
-    "/styles.css"
-];
-
-self.addEventListener("install", (event) => {
+// sw.js
+self.addEventListener('install', event => {
+    console.log('Service Worker: Installed');
+    // Optionally cache assets for offline use
     event.waitUntil(
-        caches.open(CACHE_NAME).then((cache) => {
-            return cache.addAll(urlsToCache);
+        caches.open('restaurant-billing-v1').then(cache => {
+            return cache.addAll([
+                '/HotelBilling/',
+                '/HotelBilling/index.html',
+                '/HotelBilling/dashboard.html',
+                '/HotelBilling/reports.html',
+                '/HotelBilling/tables.html',
+                '/HotelBilling/menu.html',
+                '/HotelBilling/app.js'
+            ]);
         })
     );
 });
 
-self.addEventListener("fetch", (event) => {
+self.addEventListener('activate', event => {
+    console.log('Service Worker: Activated');
+});
+
+self.addEventListener('fetch', event => {
     event.respondWith(
-        caches.match(event.request).then((response) => {
+        caches.match(event.request).then(response => {
             return response || fetch(event.request);
         })
     );
