@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Billing - Waiters</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Restaurant Billing</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item">Dashboard</a>
+                <a href="tables.html" class="nav-item">Tables</a>
+                <a href="waiters.html" class="nav-item">Waiters</a>
+                <a href="menu.html" class="nav-item">Menu</a>
+                <button id="logoutBtn" class="nav-item btn-logout">Logout</button>
+            </nav>
+            <div class="user-info">
+                <span>Logged in as: <strong id="user"></strong></span>
+                <span>Time remaining: <strong id="timer"></strong></span>
+            </div>
+        </aside>
+        </header>
+        <main>
+            <section class="card">
+                <h3>Waiter Management</h3>
+                <form id="waiterForm" class="form-grid">
+                    <input type="text" id="waiterNumber" placeholder="Waiter Number" required>
+                    <input type="text" id="waiterName" placeholder="Waiter Name" required>
+                    <button type="submit" class="btn btn-primary">Add Waiter</button>
+                </form>
+                <div id="waiterList" class="waiter-grid"></div>
+            </section>
+        </main>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
