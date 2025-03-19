@@ -4,73 +4,172 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reports</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <!-- Add Flatpickr CSS -->
+    <!-- Tailwind CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Flatpickr CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <!-- Custom Styles -->
+    <style>
+        body {
+            background: linear-gradient(135deg, #6b48ff, #00d2ff);
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .dashboard-container {
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .sidebar {
+            width: 250px;
+            background: white;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar.hidden {
+            transform: translateX(-100%);
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(20px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .card {
+            background: white;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            animation: popIn 0.5s ease-out;
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .filter-section {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 0.5s ease-out backwards;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .report-item {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: #f9fafb;
+            border-radius: 0.375rem;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .insights {
+            background: #ffffff;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-top: 1.5rem;
+            animation: slideUp 0.5s ease-out backwards;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .btn {
+            @apply bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition duration-200;
+        }
+
+        .btn-success {
+            @apply bg-green-600 hover:bg-green-700;
+        }
+    </style>
 </head>
 <body>
     <div class="dashboard-container">
-        <!-- Sidebar -->
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
-                <h2>Restaurant</h2>
+                <h2 class="text-xl font-bold p-4">Restaurant</h2>
             </div>
             <nav class="sidebar-nav">
                 <ul>
-                    <li><a href="dashboard.html" class="nav-item">Dashboard</a></li>
-                    <li><a href="tables.html" class="nav-item">Tables</a></li>
-                    <li><a href="menu.html" class="nav-item">Menu</a></li>
-                    <li><a href="reports.html" class="nav-item active">Reports</a></li>
-                    <li><button id="logoutBtn" class="nav-item btn-logout">Logout</button></li>
+                    <li><a href="/HotelBilling/dashboard.html" class="nav-item block p-2 hover:bg-gray-200">Dashboard</a></li>
+                    <li><a href="/HotelBilling/tables.html" class="nav-item block p-2 hover:bg-gray-200">Tables</a></li>
+                    <li><a href="/HotelBilling/menu.html" class="nav-item block p-2 hover:bg-gray-200">Menu</a></li>
+                    <li><a href="/HotelBilling/reports.html" class="nav-item block p-2 hover:bg-gray-200 active">Reports</a></li>
+                    <li><button id="logoutBtn" class="nav-item block w-full text-left p-2 hover:bg-gray-200 btn-logout">Logout</button></li>
                 </ul>
             </nav>
-            <div class="user-info">
-                <span>Logged in as: <strong id="user"></strong></span>
-                <span>Time remaining: <strong id="timer"></strong></span>
+            <div class="user-info p-4">
+                <span>Logged in as: <strong id="user" class="text-indigo-600"></strong></span>
+                <span class="block mt-2">Time remaining: <strong id="timer" class="text-indigo-600"></strong></span>
             </div>
         </aside>
 
-        <!-- Main Content -->
         <main class="main-content">
-            <header class="main-header">
-                <button id="toggleSidebar" class="btn btn-toggle-sidebar">
+            <header class="main-header flex items-center mb-4">
+                <button id="toggleSidebar" class="btn btn-toggle-sidebar mr-4 p-2 rounded-full hover:bg-gray-200">
                     <i class="fas fa-bars"></i>
                 </button>
-                <h1>Reports</h1>
+                <h1 class="text-2xl font-bold">Reports</h1>
             </header>
             <div class="dashboard-layout">
                 <div class="left-panel">
                     <section class="card">
-                        <h3>Filter Reports</h3>
+                        <h3 class="text-lg font-semibold mb-4">Filter Reports</h3>
                         <div class="filter-section">
-                            <select id="filterType">
+                            <select id="filterType" class="p-2 border rounded-md w-full sm:w-1/3">
                                 <option value="day">Day</option>
                                 <option value="month">Month</option>
                                 <option value="range">Date Range</option>
                                 <option value="daily">Daily Summary</option>
                             </select>
-                            <input type="text" id="filterValue" placeholder="Select date(s)" readonly>
-                            <button id="applyFilter" class="btn btn-success">Apply Filter</button>
+                            <input type="text" id="filterValue" placeholder="Select date(s)" readonly class="p-2 border rounded-md w-full sm:w-1/3">
+                            <button id="applyFilter" class="btn btn-success w-full sm:w-1/3">Apply Filter</button>
                         </div>
                         <div class="filter-section">
-                            <input type="text" id="searchBill" placeholder="Search by Bill Number">
-                            <button id="searchBillBtn" class="btn btn-success">Search</button>
+                            <input type="text" id="searchBill" placeholder="Search by Bill Number" class="p-2 border rounded-md w-full sm:w-2/3">
+                            <button id="searchBillBtn" class="btn btn-success w-full sm:w-1/3">Search</button>
                         </div>
-                        <div id="reportList"></div>
+                        <div id="reportList" class="mt-4"></div>
+                        <button id="exportPdfBtn" class="btn mt-4 w-full">Export to PDF</button>
+                    </section>
+                    <section class="insights">
+                        <h3 class="text-lg font-semibold mb-4">Report Insights</h3>
+                        <div id="insightsDetails" class="text-gray-700"></div>
                     </section>
                 </div>
             </div>
         </main>
     </div>
-    <script src="app.js"></script>
-    <!-- Add Flatpickr JS -->
+    <script src="/HotelBilling/app.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <!-- Add monthSelectPlugin for Flatpickr -->
     <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/plugins/monthSelect/index.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script>
-        // Ensure Flatpickr and monthSelectPlugin are loaded
         document.addEventListener("DOMContentLoaded", () => {
             if (typeof flatpickr === "undefined") {
                 console.error("Flatpickr is not loaded!");
@@ -86,13 +185,9 @@
             let datePicker;
 
             function updateDatePicker() {
-                // Destroy previous instance to avoid duplicates
-                if (datePicker) {
-                    datePicker.destroy();
-                }
-
+                if (datePicker) datePicker.destroy();
                 const type = filterType.value;
-                filterValue.value = ""; // Clear previous value
+                filterValue.value = "";
 
                 if (type === "day") {
                     datePicker = flatpickr(filterValue, {
