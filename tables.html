@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tables</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Restaurant</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="dashboard.html" class="nav-item">Dashboard</a></li>
+                    <li><a href="tables.html" class="nav-item active">Tables</a></li>
+                    <li><a href="menu.html" class="nav-item">Menu</a></li>
+                    <li><a href="reports.html" class="nav-item">Reports</a></li>
+                    <li><button id="logoutBtn" class="nav-item btn-logout">Logout</button></li>
+                </ul>
+            </nav>
+            <div class="user-info">
+                <span>Logged in as: <strong id="user"></strong></span>
+                <span>Time remaining: <strong id="timer"></strong></span>
+            </div>
+        </aside>
+        <main class="main-content">
+            <header class="main-header">
+                <h1>Table Management</h1>
+            </header>
+            <div class="dashboard-layout">
+                <div class="left-panel">
+                    <section class="card">
+                        <h3>Generate Tables</h3>
+                        <input type="number" id="tableCount" placeholder="Number of Tables" min="1">
+                        <button id="generateTables" class="btn btn-success">Generate</button>
+                    </section>
+                    <section class="card">
+                        <h3>Table List</h3>
+                        <div id="tableList"></div>
+                    </section>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

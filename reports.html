@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Add Flatpickr CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2>Restaurant</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="dashboard.html" class="nav-item">Dashboard</a></li>
+                    <li><a href="tables.html" class="nav-item">Tables</a></li>
+                    <li><a href="menu.html" class="nav-item">Menu</a></li>
+                    <li><a href="reports.html" class="nav-item active">Reports</a></li>
+                    <li><button id="logoutBtn" class="nav-item btn-logout">Logout</button></li>
+                </ul>
+            </nav>
+            <div class="user-info">
+                <span>Logged in as: <strong id="user"></strong></span>
+                <span>Time remaining: <strong id="timer"></strong></span>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="main-header">
+                <button id="toggleSidebar" class="btn btn-toggle-sidebar">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1>Reports</h1>
+            </header>
+            <div class="dashboard-layout">
+                <div class="left-panel">
+                    <section class="card">
+                        <h3>Filter Reports</h3>
+                        <div class="filter-section">
+                            <select id="filterType">
+                                <option value="day">Day</option>
+                                <option value="month">Month</option>
+                                <option value="range">Date Range</option>
+                                <option value="daily">Daily Summary</option>
+                            </select>
+                            <input type="text" id="filterValue" placeholder="Select date(s)" readonly>
+                            <button id="applyFilter" class="btn btn-success">Apply Filter</button>
+                        </div>
+                        <div class="filter-section">
+                            <input type="text" id="searchBill" placeholder="Search by Bill Number">
+                            <button id="searchBillBtn" class="btn btn-success">Search</button>
+                        </div>
+                        <div id="reportList"></div>
+                    </section>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="app.js"></script>
+    <!-- Add Flatpickr JS -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <!-- Add monthSelectPlugin for Flatpickr -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/plugins/monthSelect/index.js"></script>
+    <script>
+        // Ensure Flatpickr and monthSelectPlugin are loaded
+        document.addEventListener("DOMContentLoaded", () => {
+            if (typeof flatpickr === "undefined") {
+                console.error("Flatpickr is not loaded!");
+                return;
+            }
+            if (!window.monthSelectPlugin) {
+                console.error("monthSelectPlugin is not loaded!");
+                return;
+            }
+
+            const filterType = document.getElementById("filterType");
+            const filterValue = document.getElementById("filterValue");
+            let datePicker;
+
+            function updateDatePicker() {
+                // Destroy previous instance to avoid duplicates
+                if (datePicker) {
+                    datePicker.destroy();
+                }
+
+                const type = filterType.value;
+                filterValue.value = ""; // Clear previous value
+
+                if (type === "day") {
+                    datePicker = flatpickr(filterValue, {
+                        dateFormat: "Y-m-d",
+                        maxDate: "today",
+                        onReady: () => console.log("Flatpickr initialized for Day")
+                    });
+                } else if (type === "month") {
+                    datePicker = flatpickr(filterValue, {
+                        dateFormat: "Y-m",
+                        plugins: [new monthSelectPlugin({})],
+                        maxDate: "today",
+                        onReady: () => console.log("Flatpickr initialized for Month")
+                    });
+                } else if (type === "range") {
+                    datePicker = flatpickr(filterValue, {
+                        mode: "range",
+                        dateFormat: "Y-m-d",
+                        maxDate: "today",
+                        onReady: () => console.log("Flatpickr initialized for Range")
+                    });
+                } else {
+                    filterValue.removeAttribute("readonly");
+                    filterValue.value = "";
+                    filterValue.setAttribute("readonly", true);
+                }
+            }
+
+            filterType.addEventListener("change", updateDatePicker);
+            updateDatePicker();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Billing - Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2>Restaurant</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="dashboard.html" class="nav-item active">Dashboard</a></li>
+                    <li><a href="tables.html" class="nav-item">Tables</a></li>
+                    <li><a href="menu.html" class="nav-item">Menu</a></li>
+                    <li><a href="reports.html" class="nav-item">Reports</a></li>
+                    <li><button id="logoutBtn" class="nav-item btn-logout">Logout</button></li>
+                </ul>
+            </nav>
+            <div class="user-info">
+                <span>Logged in as: <strong id="user"></strong></span>
+                <span>Time remaining: <strong id="timer"></strong></span>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="main-header">
+                <button id="toggleSidebar" class="btn btn-toggle-sidebar">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1>Order Management</h1>
+            </header>
+
+            <div class="dashboard-layout">
+                <!-- Left Panel (Inputs and Order Details) -->
+                <div class="left-panel">
+                    <section class="card input-order-section">
+                        <h3>Order Input</h3>
+                        <input type="text" id="tableInput" placeholder="Enter Table Number" required>
+                        <div class="item-input-wrapper">
+                            <input type="text" id="itemInput" placeholder="Item name or code" required>
+                            <div id="suggestions" class="suggestions-dropdown"></div>
+                        </div>
+                        <div id="currentTableInfo" class="current-table-info"></div>
+                    </section>
+                    <section class="card order-section">
+                        <h3>Order Details</h3>
+                        <div class="table-wrapper">
+                            <table class="order-table">
+                                <thead>
+                                    <tr>
+                                        <th>Item</th>
+                                        <th>Price</th>
+                                        <th>Qty</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="orderList"></tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="3">Grand Total</td>
+                                        <td id="grandTotal">0.00</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <input type="number" id="itemQty" placeholder="Enter Quantity" min="1" required>
+                        <button id="generateReceipt" class="btn btn-success">Generate Receipt</button>
+                    </section>
+                </div>
+
+                <!-- Right Panel (Tables) -->
+                <div class="right-panel">
+                    <section class="card table-section">
+                        <h3>Tables</h3>
+                        <div id="tableGrid" class="table-grid"></div>
+                    </section>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
