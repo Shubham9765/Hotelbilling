@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (username === "admin" && password === "password123") {
                 localStorage.setItem("loggedInUser", username);
                 localStorage.setItem("loginTime", Date.now());
-                window.location.src = "/dashboard.html";
+                window.location.href = "/Hotelbilling/dashboard.html";
             } else {
                 document.getElementById("error").textContent = "Invalid credentials!";
             }
