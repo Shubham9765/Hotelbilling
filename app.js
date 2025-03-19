@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             e.preventDefault();
             const username = document.getElementById("username").value;
             const password = document.getElementById("password").value;
-            if (username === "admin" && password === "password123") {
+            if (username === "admin" && password === "admin") {
                 await db.users.put({ username: username, loginTime: Date.now() });
                 window.location.href = "dashboard.html";
             } else {
